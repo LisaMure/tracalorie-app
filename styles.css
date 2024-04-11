@@ -1,0 +1,48 @@
+:root {
+    --primary-color: #599F3D;
+    --text-color: #212529
+}
+
+/* body {
+    font-family: 
+} */
+
+.navbar-brand {
+    font-size: 34px;
+    font-weight:500;
+}
+
+.navbar-brand, .navbar button {
+    color: white !important;
+}
+
+.navbar button {
+    border: 1px solid white;
+}
+
+.navbar button:hover {
+    background:  white;
+    color: var(--text-color) !important;
+}
+
+.calories .card {
+    color: white;
+    border-radius: 5px;
+}
+
+.calorie-amount {
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.calorie-description {
+    font-size: 23px;
+    font-weight: 400;
+}
+.calorie-limit {
+    background-color: var(--text-color);
+}
+
+.calorie-gain {
+    background: var(--primary-color);
+}
