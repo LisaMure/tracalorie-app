@@ -1,15 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+
 :root {
     --primary-color: #599F3D;
     --text-color: #212529
 }
 
-/* body {
-    font-family: 
-} */
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+  font-style: normal;
+}
 
 .navbar-brand {
-    font-size: 34px;
-    font-weight:500;
+    font-size: 36px;
 }
 
 .navbar-brand, .navbar button {
@@ -46,3 +50,62 @@
 .calorie-gain {
     background: var(--primary-color);
 }
+
+.meals-workouts input {
+    width: 45%;
+    border-radius: 4px;
+    padding: 10px 0;
+    margin-right: 20px;
+    border:  1px solid gray;
+    font-size: 15px;
+} 
+
+.meals-btn, .meal-calories-btn {
+    background: var(--primary-color) !important;
+    color: white;
+}
+
+
+
+.meals-btn:hover {
+   opacity: 0.8 !important;
+   color: white;
+}
+
+.meal-calories-btn:hover {
+    color: white;
+}
+
+.workouts-btn, .workout-calories-btn {
+    background: #FD7E14 !important;
+    color: white
+}
+
+.workouts-btn:hover {
+   opacity: 0.8 !important;
+   color: white;
+}
+
+.workout-calories-btn:hover {
+    color: white;
+}
+
+.meals-item p {
+    font-size: 23px;
+}
+.meals-item button {
+    font-size: 35px;
+}
+
+.collapse button {
+    float: left;
+}
+
+.fa-square-xmark {
+    color: #BB2D3B;
+}
+
+.fa-square-xmark:hover {
+    color: #a81b29;
+}
+
