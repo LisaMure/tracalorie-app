@@ -44,7 +44,7 @@ class CalorieTracker {
 
     _displayCaloriesBurned() {
         const caloriesBurned = document.getElementById("calories-burned")
-
+        
         const totalCalories = this._workouts.reduce((total, workout) => total + workout.calories, 0)
 
         caloriesBurned.innerHTML = totalCalories
@@ -52,10 +52,33 @@ class CalorieTracker {
 
     _displayCaloriesRemaining() {
         const caloriesRemaining = document.getElementById("calories-remaining")
+        const progressBar = document.getElementById("progress-bar")
+        const calorieTotal = document.getElementById("calorie-total")
+
 
         const remainingCalories = this._calorieLimit - this._totalCalories;
 
         caloriesRemaining.innerHTML = remainingCalories;
+
+        if (remainingCalories <= 0) {
+            progressBar.classList.remove("progress-bar-bg")
+            progressBar.classList.add("bg-danger-custom")
+            calorieTotal.parentElement.parentElement.classList.remove("calorie-gain")
+            calorieTotal.parentElement.parentElement.classList.add("bg-danger-custom")
+        } else {
+            progressBar.classList.remove("bg-danger-custom")
+            progressBar.classList.add("progress-bar-bg")
+            calorieTotal.parentElement.parentElement.classList.remove("bg-danger-custom")
+            calorieTotal.parentElement.parentElement.classList.add("calorie-gain")
+        }
+    }
+
+    _updateProgressBar() {
+        const progressBar = document.getElementById("progress-bar")
+        const percentage = (this._totalCalories / this._calorieLimit) * 100
+        const width = Math.min(percentage, 100)
+
+        progressBar.style.width = `${width}%`
     }
 
   _render() {
@@ -64,6 +87,7 @@ class CalorieTracker {
     this._displayCaloriesConsumed()
     this._displayCaloriesBurned()
     this._displayCaloriesRemaining()
+    this._updateProgressBar()
   }
 }
 
@@ -84,7 +108,7 @@ class Workout {
 }
 
 const tracker = new CalorieTracker()
-const breakfast = new Meal("Breakfast", 500)
+const breakfast = new Meal("Breakfast", 4500)
 tracker.addMeal(breakfast)
 const jog = new Workout("Jog", 250)
 tracker.addWorkout(jog)
