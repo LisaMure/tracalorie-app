@@ -107,8 +107,47 @@ class Workout {
     }
 }
 
-const tracker = new CalorieTracker()
-const breakfast = new Meal("Breakfast", 4500)
-tracker.addMeal(breakfast)
-const jog = new Workout("Jog", 250)
-tracker.addWorkout(jog)
+class App {
+    constructor() {
+        this._tracker = new CalorieTracker();
+
+        // Event listeners
+        document.getElementById("meal-form").addEventListener("submit", this._newItem.bind(this, "meal"));
+
+        document.getElementById("workout-form").addEventListener("submit", this._newItem.bind(this, "workout"));
+    }
+
+    // Add New Meal
+    _newItem(type, event) {
+        event.preventDefault();
+        const name = document.getElementById(`${type}-name`);
+        const calories = document.getElementById(`${type}-calories`);
+
+        // Validate Input 
+        if (name.value === "" || calories.value === "") {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        // Check If Meal or Workout
+        if(type === "meal") {
+            const meal = new Meal(name.value, +calories.value);
+            this._tracker.addMeal(meal);
+        } else if (type === "workout") {
+            const workout = new Workout(name.value, +calories.value);
+            this._tracker.addWorkout(workout);
+
+        }
+
+        // Clear Form
+        name.value = ""
+        calories.value = ""
+        
+        // Collapse Form
+        const collapseEl = document.getElementById(`collapse-${type}`)
+        collapseEl.classList.remove("show")
+        collapseEl.setAttribute("aria-expanded", "false")
+    }
+}
+
+const app = new App();
