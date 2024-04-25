@@ -52,6 +52,18 @@ class CalorieTracker {
             }
     }
 
+    setLimit(limit) {
+        this._calorieLimit = limit
+        this._render()
+    }
+
+    resetDay() {
+        this._meals = []
+        this._workouts = []
+        this._totalCalories = 0
+        this._render()
+    }
+
     // Private Methods
 
     // Display Calorie Limit
@@ -143,7 +155,7 @@ class CalorieTracker {
     _displayNewWorkout(workout) {
         const newWorkout = document.getElementById("new-workout-item")
         const workoutEl = document.createElement("div")
-        workoutEl.classList.add("card", "w-100", "meals-item", "mt-3") 
+        workoutEl.classList.add("card", "w-100", "workouts-item", "mt-3") 
         // Set attribute for id to be used when removing item
         workoutEl.setAttribute('data-id', workout.id);
 
@@ -191,13 +203,27 @@ class App {
         this._tracker = new CalorieTracker();
 
         // Event listeners
+
+        // New Items events
         document.getElementById("meal-form").addEventListener("submit", this._newItem.bind(this, "meal"));
 
         document.getElementById("workout-form").addEventListener("submit", this._newItem.bind(this, "workout"));
 
+        // Remove Items events
         document.getElementById("new-meal-item").addEventListener("click", this._removeItem.bind(this, "meal"))
 
         document.getElementById("new-workout-item").addEventListener("click", this._removeItem.bind(this, "workout"))
+
+        // Filter events
+        document.getElementById("meals-filter").addEventListener("keyup", this._filterItems.bind(this, "meals"))
+
+        document.getElementById("workouts-filter").addEventListener("keyup", this._filterItems.bind(this, "workouts"))
+
+        // Reset Btn event
+        document.getElementById("reset-btn").addEventListener("click", this._reset.bind(this))
+
+        // Daily Limit Form event 
+        document.getElementById("limit-form").addEventListener("submit", this._setLimit.bind(this))
     }
 
     // Add New Item
@@ -249,6 +275,55 @@ if (event.target.classList.contains("fa-square-xmark")) {
 }
 }
 
+_filterItems(type, event) {
+    event.preventDefault()
+
+    const inputText = document.getElementById(`${type}-filter`).value.toLowerCase()
+    console.log(inputText)
+    
+    const items = document.querySelectorAll(`.${type}-item`);
+
+    items.forEach(item => {
+        const itemName = item.querySelector("p").textContent.toLowerCase();
+
+         if(itemName.includes(inputText)) {
+            item.style.display = "block";
+        } else {
+             item.style.display = "none";
+        }
+        
+        });
+
+        inputText = ""
+    }
+
+    _reset() {
+        this._tracker.resetDay()
+        document.getElementById("new-meal-item").innerHTML = ""
+        document.getElementById("new-workout-item").innerHTML = ""
+        document.getElementById("meals-filter").value = "";
+        document.getElementById("workouts-filter").value = "";
+    }
+
+    _setLimit(event) {
+        event.preventDefault()
+
+        const input = document.getElementById("limit-input");
+        const limit = input.value;
+
+        if (limit === "") {
+            alert("Please enter a limit");
+        } else {
+            this._tracker.setLimit(+limit);
+        }
+
+        // Collapse Modal
+        const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        modal.hide();
+    }
 }
+
+
+
 
 const app = new App();

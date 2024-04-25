@@ -102,10 +102,10 @@ body {
     color: white;
 }
 
-.meals-item p {
+.meals-item p, .workouts-item p {
     font-size: 23px;
 }
-.meals-item button {
+.meals-item button, .workouts-item button {
     font-size: 35px;
 }
 
